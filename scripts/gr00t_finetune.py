@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# nohup env WANDB_MODE=disabled python scripts/gr00t_finetune.py --dataset_path ../Dataset/multi_tasks_h264/ --data_config test_config --output_dir ../Model/groot1.5/ &
+
 import os
 import subprocess
 import sys
