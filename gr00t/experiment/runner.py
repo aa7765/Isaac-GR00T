@@ -29,6 +29,8 @@ from gr00t.utils.experiment import (
     safe_save_model_for_hf_trainer,
 )
 
+from gr00t.experiment.gpu_callback import GpuLoggingCallback
+
 
 class TrainRunner:
     def __init__(
@@ -147,6 +149,13 @@ class TrainRunner:
             data_collator=data_collator,
             compute_dtype=compute_dtype,
         )
+        
+        # Add system/gpu logging callback
+        gpu_callback = GpuLoggingCallback(
+            log_dir=os.path.join(training_args.output_dir, "runs/system_metrics"),
+            batch_size=training_args.per_device_train_batch_size,
+        )
+        trainer.add_callback(gpu_callback)
 
         # Add checkpoint format callback to ensure experiment_cfg is copied to each checkpoint
         run_name = training_args.run_name
